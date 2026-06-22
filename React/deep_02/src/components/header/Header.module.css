@@ -1,0 +1,15 @@
+.header{
+  background-color: rgb(207, 194, 194);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  margin: 5px;
+}
+
+.bandar{
+  color: blueviolet;
+  text-decoration:line-through;
+  justify-content: center;
+  display: flex;
+}
