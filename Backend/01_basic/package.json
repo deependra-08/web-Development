@@ -1,0 +1,24 @@
+{
+  "name": "01_basic",
+  "version": "1.0.0",
+  "description": "new to backend",
+  "homepage": "https://github.com/deependra-08/web-Development#readme",
+  "bugs": {
+    "url": "https://github.com/deependra-08/web-Development/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deependra-08/web-Development.git"
+  },
+  "license": "ISC",
+  "author": "deependra singh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
