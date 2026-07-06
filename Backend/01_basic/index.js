@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req,res)=>{
     res.send('Login page');
-});
+}); 
 
 app.get('/deep',(req,res)=>{
     res.send("New REsponse PORT=4000 send");
