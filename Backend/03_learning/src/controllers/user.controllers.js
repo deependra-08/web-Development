@@ -14,31 +14,41 @@
     ){
         throw new ApiError(400,"All Fields are Required")
     }
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or:[{username}, {email}]
     })
 
     if(existedUser){
         throw new ApiError(409,"User with this email and username already exist")
     }
+    console.log(req.files);
+    const avatarLocalPath = req.files?.avatar?.[0]?.path;
+    // const coverImageLocalpath = req.files?.coverImage?.[0]?.path || req.files?.CoverImage?.[0]?.path;
 
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalpath = req.files?.coverImage[0]?.path;
+    let coverImageLocalpath;
+    if(req.files && Array.isArray(req.files.coverImage) &&req.files.coverImage.length>0){
+        coverImageLocalpath = req.files.coverImage[0].path
+    }
 
     if(!avatarLocalPath){
         throw new ApiError(400,"Avatar file is required")
     }
 
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalpath)
+    let avatar = null
+    let coverImage = null
 
-    if(!avatarLocalPath){
-        throw new ApiError(400,"Avatar file is required")
+    if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_CLOUD_NAME !== '<your_api_secret>' && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET && process.env.CLOUDINARY_API_SECRET !== '<your_api_secret>') {
+        avatar = await uploadOnCloudinary(avatarLocalPath)
+        coverImage = await uploadOnCloudinary(coverImageLocalpath)
+    }
+
+    if (!avatar) {
+        avatar = { url: '/default-avatar.svg' }
     }
 
     const user = await User.create({
         fullname,
-        avatar:avatar.url,
+        avatar: avatar.url,
         coverImage: coverImage?.url || "",
         email,
         password,
