@@ -191,7 +191,7 @@ const generateAccessAndRefreshTokens = async(userId)=>{
             new ApiResponse(
                 200,
                 {accessToken,refreshToken: newRefreshToken,
-                }"Access token refreshed"
+                },"Access token refreshed"
             )
         )
     } catch (error) {
