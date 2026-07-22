@@ -19,7 +19,8 @@ const generateAccessAndRefreshTokens = async(userId)=>{
         return {accessToken, refreshToken}
 
     } catch (error) {
-        throw new ApiError(500,"Something went wrong while generating refresh and access token")
+    console.error("Error generating tokens:", error);
+    throw error;
     }
 }
 
@@ -134,8 +135,8 @@ const generateAccessAndRefreshTokens = async(userId)=>{
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1
             }
         },
         {
